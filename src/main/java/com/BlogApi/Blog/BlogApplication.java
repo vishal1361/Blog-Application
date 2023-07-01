@@ -38,11 +38,10 @@ public class BlogApplication implements CommandLineRunner {
 				" CONSTRAINT fk_tag FOREIGN KEY(blog_id) references Blog_details(blog_id) on delete cascade" +
 				");");
 		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS tag_collection (" +
-				" seq integer NOT NULL SERIAL," +
-				" tag_name VARCHAR(255) NOT NULL," +
-				" CONSTRAINT tag_collection_pkey PRIMARY KEY (seq)," +
-				" CONSTRAINT tag_collection_tag_name_key UNIQUE (tag_name)" +
-				");");
+				" seq INT GENERATED ALWAYS AS IDENTITY," +
+				" tag_name VARCHAR(255) unique," +
+				" PRIMARY KEY (seq));");
+
 		jdbcTemplate.update("DELETE from tag_collection");
 		jdbcTemplate.update("Insert into tag_collection (tag_name) values ('Advertising')");
 		jdbcTemplate.update("Insert into tag_collection (tag_name) values ('Books')");
