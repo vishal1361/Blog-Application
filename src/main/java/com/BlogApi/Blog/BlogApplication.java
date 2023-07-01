@@ -15,7 +15,7 @@ public class BlogApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		jdbcTemplate.update("Create table Blog_Details(" +
+		jdbcTemplate.update("Create table IF NOT EXISTS Blog_Details(" +
 				" blog_id INT GENERATED ALWAYS AS IDENTITY," +
 				" user_id INT NOT NULL," +
 				" title VARCHAR(255) NOT NULL," +
@@ -23,7 +23,7 @@ public class BlogApplication implements CommandLineRunner {
 				" body VARCHAR(255) NOT NULL," +
 				" PRIMARY KEY(blog_id)" +
 				");");
-		jdbcTemplate.update("Create table Comment_Details(" +
+		jdbcTemplate.update("Create table IF NOT EXISTS Comment_Details(" +
 				" comment_id INT GENERATED ALWAYS AS IDENTITY," +
 				" user_id INT NOT NULL," +
 				" blog_id INT NOT NULL," +
@@ -31,19 +31,19 @@ public class BlogApplication implements CommandLineRunner {
 				" PRIMARY KEY(comment_id)," +
 				" CONSTRAINT fk_blog_id FOREIGN KEY(blog_id) references Blog_Details(blog_id) on delete cascade" +
 				");");
-		jdbcTemplate.update("create table Tag_Details (" +
+		jdbcTemplate.update("create table IF NOT EXISTS Tag_Details (" +
 				" tag_name VARCHAR(255) NOT NULL," +
 				" blog_id INT NOT NULL," +
 				" PRIMARY KEY(tag_name, blog_id)," +
 				" CONSTRAINT fk_tag FOREIGN KEY(blog_id) references Blog_details(blog_id) on delete cascade" +
 				");");
-		jdbcTemplate.update("CREATE TABLE tag_collection (" +
+		jdbcTemplate.update("CREATE TABLE IF NOT EXISTS tag_collection (" +
 				" seq integer NOT NULL SERIAL," +
 				" tag_name VARCHAR(255) NOT NULL," +
 				" CONSTRAINT tag_collection_pkey PRIMARY KEY (seq)," +
 				" CONSTRAINT tag_collection_tag_name_key UNIQUE (tag_name)" +
 				");");
-
+		jdbcTemplate.update("DELETE from tag_collection");
 		jdbcTemplate.update("Insert into tag_collection (tag_name) values ('Advertising')");
 		jdbcTemplate.update("Insert into tag_collection (tag_name) values ('Books')");
 		jdbcTemplate.update("Insert into tag_collection (tag_name) values ('Fashion')");
