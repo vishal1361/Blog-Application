@@ -132,7 +132,7 @@ public class BlogRepositoryImpl implements BlogRepository {
 
     @Override
     public Comment getComment(long blog_id, long comment_id) {
-        Comment comment = jdbcTemplate.queryForObject("SELECT * FROM "+comment_table+" WHERE comment_id = ?, blog_id = ?",
+        Comment comment = jdbcTemplate.queryForObject("SELECT * FROM "+comment_table+" WHERE comment_id = ? and blog_id = ?",
                     BeanPropertyRowMapper.newInstance(Comment.class), comment_id, blog_id);
         return comment;
     }
