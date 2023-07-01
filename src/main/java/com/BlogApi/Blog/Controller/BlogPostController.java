@@ -1,7 +1,7 @@
 package com.BlogApi.Blog.Controller;
 
 import com.BlogApi.Blog.Entity.Blog;
-import com.BlogApi.Blog.Exception.BlogIdNotFoundException;
+import com.BlogApi.Blog.Exception.ResourceNotFoundException;
 import com.BlogApi.Blog.Exception.ExistingTitleException;
 import com.BlogApi.Blog.Services.BlogPostServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +41,11 @@ public class BlogPostController {
 
 
     @PatchMapping("/blogs/{blog_id}")
-    public ResponseEntity<Blog> updateBlogPost(@PathVariable String blog_id, @RequestBody Blog new_blog) throws BlogIdNotFoundException {
+    public ResponseEntity<Blog> updateBlogPost(@PathVariable String blog_id, @RequestBody Blog new_blog) throws ResourceNotFoundException {
         return blogServices.updateBlogPostService(blog_id, new_blog);
     }
     @DeleteMapping("/blogs/{blog_id}")
-    public ResponseEntity<Blog> deleteBlogPost(@PathVariable String blog_id) throws BlogIdNotFoundException {
+    public ResponseEntity<Blog> deleteBlogPost(@PathVariable String blog_id) throws ResourceNotFoundException {
         return blogServices.deleteBlogPostService(blog_id);
     }
 }

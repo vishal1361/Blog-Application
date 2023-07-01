@@ -1,19 +1,19 @@
 package com.BlogApi.Blog.Exception;
 
-public class BlogIdNotFoundException extends Exception{
+public class ResourceNotFoundException extends Exception{
     private String message;
     private String Operation_Name;
     private boolean success;
 
 
-    public BlogIdNotFoundException(String Operation_Name, boolean success, String message) {
+    public ResourceNotFoundException(String Operation_Name, boolean success, String message) {
         super(message);
         this.message = message;
         this.Operation_Name = Operation_Name;
         this.success = success;
     }
 
-    public BlogIdNotFoundException() {
+    public ResourceNotFoundException() {
         super();
     }
 

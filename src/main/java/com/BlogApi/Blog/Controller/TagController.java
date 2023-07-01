@@ -1,6 +1,7 @@
 package com.BlogApi.Blog.Controller;
 
 import com.BlogApi.Blog.Entity.Blog;
+import com.BlogApi.Blog.Exception.ResourceNotFoundException;
 import com.BlogApi.Blog.Services.TagServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class TagController {
     }
 
     @PutMapping("/blogs/{blog_id}/tags")
-    public ResponseEntity<Blog> updateTagsOfBlog(@PathVariable String blog_id, @RequestBody Blog blog) {
+    public ResponseEntity<Blog> updateTagsOfBlog(@PathVariable String blog_id, @RequestBody Blog blog)throws ResourceNotFoundException {
         return tagServices.updateTagsOfBlogService(blog_id, blog);
     }
 

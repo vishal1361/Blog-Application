@@ -14,8 +14,8 @@ public class ApplicationExceptionHandler {
         return apiResponse;
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(BlogIdNotFoundException.class)
-    public ApiResponse handleInvalidArgumentException(BlogIdNotFoundException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ApiResponse handleInvalidArgumentException(ResourceNotFoundException ex) {
         ApiResponse apiResponse = new ApiResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), ex.getOperation_Name(), ex.getMessage(), ex.isSuccess());
         return apiResponse;
     }
