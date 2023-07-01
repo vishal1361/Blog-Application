@@ -27,15 +27,15 @@ public class CommentServices {
         }
     }
 
-    public ResponseEntity<Comment> updateCommentService( String comment_id, Comment new_comment)throws ResourceNotFoundException {
+    public ResponseEntity<Comment> updateCommentService( String blog_id, String comment_id, Comment new_comment)throws ResourceNotFoundException {
         try{
-            Comment comment = blogRepository.getComment(Long.parseLong(comment_id));
+            Comment comment = blogRepository.getComment(Long.parseLong(blog_id), Long.parseLong(comment_id));
             comment.setBody(new_comment.getBody());
             Comment updated_comment = blogRepository.updateComment(comment);
             return new ResponseEntity<>(updated_comment, HttpStatus.OK);
         }
         catch(Exception e) {
-            throw new ResourceNotFoundException("updateCommentService", false, "Comment with comment_id="+comment_id+" not found.");
+            throw new ResourceNotFoundException("updateCommentService", false, "Either Blog with blog_id="+blog_id+" is not present or blog has no comment with comment_id="+comment_id);
         }
     }
 

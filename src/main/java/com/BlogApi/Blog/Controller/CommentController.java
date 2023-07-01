@@ -24,9 +24,9 @@ public class CommentController {
         return commentServices.addCommentService(comment);
     }
 
-    @PutMapping("/blogs/{blog_id}/comments/{comment_id}")
-    public ResponseEntity<Comment> updateComment(@PathVariable String comment_id, @RequestBody Comment new_comment) throws ResourceNotFoundException{
-        return commentServices.updateCommentService(comment_id, new_comment);
+    @PatchMapping("/blogs/{blog_id}/comments/{comment_id}")
+    public ResponseEntity<Comment> updateComment(@PathVariable String blog_id, @PathVariable String comment_id, @RequestBody Comment new_comment) throws ResourceNotFoundException{
+        return commentServices.updateCommentService(blog_id, comment_id, new_comment);
     }
 
     @DeleteMapping("/blogs/{blog_id}/comments/{comment_id}")
