@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = {"*"}, methods = {RequestMethod.DELETE,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT})
+@CrossOrigin(origins = {"*"}, methods = {RequestMethod.DELETE,RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT, RequestMethod.PATCH})
 @RestController
 public class BlogPostController {
     @Autowired
