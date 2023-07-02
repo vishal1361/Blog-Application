@@ -20,14 +20,14 @@ public class BlogApplication implements CommandLineRunner {
 				" user_id INT NOT NULL," +
 				" title VARCHAR(255) NOT NULL," +
 				" author VARCHAR(255) NOT NULL," +
-				" body VARCHAR(255) NOT NULL," +
+				" body VARCHAR(65535) NOT NULL," +
 				" PRIMARY KEY(blog_id)" +
 				");");
 		jdbcTemplate.update("Create table IF NOT EXISTS Comment_Details(" +
 				" comment_id INT GENERATED ALWAYS AS IDENTITY," +
 				" user_id INT NOT NULL," +
 				" blog_id INT NOT NULL," +
-				" body VARCHAR(255) NOT NULL, " +
+				" body VARCHAR(65535) NOT NULL, " +
 				" PRIMARY KEY(comment_id)," +
 				" CONSTRAINT fk_blog_id FOREIGN KEY(blog_id) references Blog_Details(blog_id) on delete cascade" +
 				");");

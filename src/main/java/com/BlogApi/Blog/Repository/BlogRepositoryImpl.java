@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,21 +20,19 @@ public class BlogRepositoryImpl implements BlogRepository {
     private final String tag_collection = "Tag_Collection";
 
     public List<String> getTagOfBlog(long blog_id) {
-        String sql = "Select tag_name from Tag_Details where blog_id = ?";
-        List <Tag> tags = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Tag.class), blog_id);
+        List <Tag> tags = jdbcTemplate.query("Select tag_name from Tag_Details where blog_id = ?", BeanPropertyRowMapper.newInstance(Tag.class), blog_id);
         List<String> tagList = new ArrayList<>();
         for(Tag t : tags) {
             tagList.add(t.getTag_name());
         }
         return tagList;
     }
-    public int insertIntoTagTable(List<String>tagList, long blog_id) {
-        int c = 0;
+    public void insertIntoTagTable(List<String>tagList, long blog_id) {
         for(String tag_name : tagList) {
-            c += jdbcTemplate.update("INSERT INTO " + tag_table + " (tag_name, blog_id) VALUES(?, ?)", tag_name, blog_id);
+            jdbcTemplate.update("INSERT INTO " + tag_table + " (tag_name, blog_id) VALUES(?, ?)", tag_name, blog_id);
         }
-        return c;
     }
+
     @Override
     public List<Blog> getBlogPosts() {
         List<Blog> blogList = jdbcTemplate.query("SELECT * from "+table_name, BeanPropertyRowMapper.newInstance(Blog.class));
@@ -55,18 +52,11 @@ public class BlogRepositoryImpl implements BlogRepository {
     }
     @Override
     public Blog getBlogPostsById(long blog_id) {
-        try {
-            Blog blog = jdbcTemplate.queryForObject("SELECT * FROM "+table_name+" WHERE blog_id = ?",
+        Blog blog = jdbcTemplate.queryForObject("SELECT * FROM "+table_name+" WHERE blog_id = ?",
                     BeanPropertyRowMapper.newInstance(Blog.class), blog_id);
-            blog.setTagList(getTagOfBlog(blog.getBlog_id()));
-            return blog;
-        }
-        catch (IncorrectResultSizeDataAccessException e) {
-            return null;
-        }
+        blog.setTagList(getTagOfBlog(blog.getBlog_id()));
+        return blog;
     }
-
-
 
     @Override
     public Blog createBlogPost(Blog blog) {
@@ -76,6 +66,7 @@ public class BlogRepositoryImpl implements BlogRepository {
         insertIntoTagTable(blog.getTagList(), b.getBlog_id());
         return b;
     }
+
     @Override
     public List<Blog> getBlogsByTagName(String tag) {
         String sql = "SELECT " +
@@ -101,6 +92,7 @@ public class BlogRepositoryImpl implements BlogRepository {
         insertIntoTagTable(new_tag, blog_id);
         return getBlogPostsById(blog_id);
     }
+
     @Override
     public List<String> getAllTags() {
         String sql = "Select tag_name from " + tag_collection;
@@ -120,6 +112,7 @@ public class BlogRepositoryImpl implements BlogRepository {
     public Blog updateBlogPost(Blog blog) {
         Blog b = jdbcTemplate.queryForObject("UPDATE "+table_name+" SET title=?, author=?,  body=? WHERE blog_id = ? returning blog_id, user_id, title, author, body",
                 BeanPropertyRowMapper.newInstance(Blog.class), blog.getTitle(), blog.getAuthor(), blog.getBody(), blog.getBlog_id());
+
         b.setTagList(getTagOfBlog(b.getBlog_id()));
         return b;
     }

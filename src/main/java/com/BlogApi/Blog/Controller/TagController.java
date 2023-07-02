@@ -19,10 +19,6 @@ public class TagController {
         return tagServices.getBlogsByTagNameService(tag_name);
     }
 
-    @PutMapping("/blogs/{blog_id}/tags")
-    public ResponseEntity<Blog> updateTagsOfBlog(@PathVariable String blog_id, @RequestBody Blog blog)throws ResourceNotFoundException {
-        return tagServices.updateTagsOfBlogService(blog_id, blog);
-    }
 
     @GetMapping("/blogs/tags")
     public ResponseEntity<List<String>> getAllTags() {

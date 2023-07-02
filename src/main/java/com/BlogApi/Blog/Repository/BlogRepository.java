@@ -3,7 +3,7 @@ import java.util.List;
 import com.BlogApi.Blog.Entity.Blog;
 import com.BlogApi.Blog.Entity.Comment;
 public interface BlogRepository {
-    public int insertIntoTagTable(List<String>tagList, long blog_id);
+    public void insertIntoTagTable(List<String>tagList, long blog_id);
     public List<Blog> getBlogPosts();
     public List<Blog> getBlogPosts(String title);
     public Blog getBlogPostsById(long blog_id);

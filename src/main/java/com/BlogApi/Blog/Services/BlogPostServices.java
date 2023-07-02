@@ -39,15 +39,20 @@ public class BlogPostServices {
     public ResponseEntity<Blog> updateBlogPostService( String blog_id,  Blog new_blog) throws ResourceNotFoundException {
         try{
             Blog blog = blogRepository.getBlogPostsById(Long.parseLong(blog_id));
-            blog.setUser_id(new_blog.getUser_id());
-            if(blog.getTitle()!=null)blog.setTitle(new_blog.getTitle());
-            if(blog.getBody()!=null)blog.setBody(new_blog.getBody());
-            if(blog.getAuthor()!=null)blog.setAuthor(new_blog.getAuthor());
-            Blog updated_blog  = blogRepository.updateBlogPost(blog);
-            return new ResponseEntity<>(updated_blog, HttpStatus.OK);
+            if(blog.getTitle().equals(new_blog.getTitle())==false || blog.getAuthor().equals(new_blog.getAuthor())==false || blog.getBody().equals(new_blog.getBody())==false) {
+                if(new_blog.getTitle()!=null)blog.setTitle(new_blog.getTitle());
+                if(new_blog.getBody()!=null)blog.setBody(new_blog.getBody());
+                if(new_blog.getAuthor()!=null)blog.setAuthor(new_blog.getAuthor());
+                blog = blogRepository.updateBlogPost(blog);
+            }
+
+            if(new_blog.getTagList()!= null && blog.getTagList().equals(new_blog.getTagList()) == false) {
+                blog = blogRepository.updateTagsOfBlog(Long.parseLong(blog_id), new_blog.getTagList());
+            }
+            return new ResponseEntity<>(blog, HttpStatus.OK);
         }
         catch(Exception e) {
-            throw new ResourceNotFoundException("updateBlogPostService", false, "Blog with blog_id="+blog_id+" not found!.");
+            throw new ResourceNotFoundException("updateBlogPostService", false, e.getMessage());
         }
     }
 

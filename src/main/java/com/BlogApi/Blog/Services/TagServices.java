@@ -17,15 +17,6 @@ public class TagServices {
         return new ResponseEntity<>(this.blogRepository.getBlogsByTagName(tag_name), HttpStatus.OK);
     }
 
-    public ResponseEntity<Blog> updateTagsOfBlogService(String blog_id, Blog blog)throws ResourceNotFoundException {
-        try{
-            return new ResponseEntity<>(blogRepository.updateTagsOfBlog(Long.parseLong(blog_id), blog.getTagList()), HttpStatus.OK);
-        }
-        catch(Exception e) {
-            throw new ResourceNotFoundException("updateTagsOfBlogService", false, "Blog with blog_id="+blog_id+" not found!");
-        }
-    }
-
     public ResponseEntity<List<String>> getAllTagsService() {
         return new ResponseEntity<>(blogRepository.getAllTags(), HttpStatus.OK);
     }
