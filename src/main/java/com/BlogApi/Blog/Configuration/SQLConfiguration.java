@@ -10,9 +10,9 @@ public class SQLConfiguration {
     public DataSource dataSource() {
         return DataSourceBuilder
                 .create()
-                .url("jdbc:postgresql://dpg-cigss9l9aq012ev9h9c0-a:5432/blogdb_paxg")
-                .username("blogdb_paxg_user")
-                .password("NWLQTqmUu3CFV1UU3mNFlU81CGJebNS8")
+                .url("jdbc:postgresql://dpg-cih6ud59aq012eqtbb9g-a:5432/blogdb_nhg9")
+                .username("blogdb_nhg9_user")
+                .password("47jpkMi32brJBapTk8txP6JUjBoGcpKx")
                 .driverClassName("org.postgresql.Driver")
                 .build();
     }
