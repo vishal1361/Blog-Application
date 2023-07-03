@@ -18,7 +18,7 @@ public class BlogApplication implements CommandLineRunner {
 		jdbcTemplate.update("Create table IF NOT EXISTS Blog_Details(" +
 				" blog_id INT GENERATED ALWAYS AS IDENTITY," +
 				" user_id INT NOT NULL," +
-				" title VARCHAR(255) NOT NULL," +
+				" title VARCHAR(255) UNIQUE NOT NULL," +
 				" author VARCHAR(255) NOT NULL," +
 				" body TEXT NOT NULL," +
 				" PRIMARY KEY(blog_id)" +
