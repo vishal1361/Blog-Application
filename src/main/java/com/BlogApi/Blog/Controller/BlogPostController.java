@@ -44,8 +44,9 @@ public class BlogPostController {
     public ResponseEntity<Blog> updateBlogPost(@PathVariable String blog_id, @RequestBody Blog new_blog) throws ResourceNotFoundException {
         return blogServices.updateBlogPostService(blog_id, new_blog);
     }
-//    @DeleteMapping("/blogs/{blog_id}")
-//    public ResponseEntity<Blog> deleteBlogPost(@PathVariable String blog_id) throws ResourceNotFoundException {
-//        return blogServices.deleteBlogPostService(blog_id);
-//    }
+    @DeleteMapping("/blogs/{blog_id}")
+    public ResponseEntity<Blog> deleteBlogPost(@PathVariable String blog_id) throws ResourceNotFoundException {
+        return blogServices.deleteBlogPostService(blog_id);
+    }
+
 }
